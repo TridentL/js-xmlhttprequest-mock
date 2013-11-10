@@ -1,0 +1,3 @@
+[submodule "src/event-emitter"]
+	path = src/event-emitter
+	url = git@github.com:tomasperezv/event-emitter.git
