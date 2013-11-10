@@ -16,6 +16,53 @@ so we can be notified of who is calling its methods and the different events tha
 
 - XMLHttpRequestMock.restore(): Restore the native implementation.
 
+```javascript
+
+/**
+ * Normal XMLHttpRequest
+ */
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+	if (xhr.readyState === 4) {}
+	...
+};
+
+xhr.open('GET', 'http://www.tomasperez.com', true);
+xhr.send(null);
+
+/**
+ * Using the mock object
+ */
+XMLHttpRequestMock.override();
+XMLHttpRequestMock.expect([
+	{
+		'url': 'http://api.tomasperez.com/v1/data.json',
+		'delay': 500,
+		'response: {a: 1, b: 2}
+	}
+]);
+
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+	if (xhr.readyState === 4) {
+		// Restore the native implementation
+		XMLHttpRequestMock.restore();
+	}
+};
+
+xhr.open('GET', 'http://www.tomasperez.com', true);
+xhr.send(null);
+
+/**
+ * Spying the native XMLHttpRequest 
+ */
+var xhr = new XMLHttpRequestMock.spy({
+	onSuccess: function(caller, response) {
+	}
+});
+
+```
+
 Brief history of the XMLHttpRequest object
 ============================================
 - The XMLHttpRequest object was designed by Microsoft, originally created by developers of Outlook Web Access, for
