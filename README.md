@@ -11,6 +11,9 @@ modern browsers.
 
 - XMLHttpRequestMock.override(): Override the native XMLHttpRequest object.
 
+- XMLHttpRequestMock.spy(): Override partially the native XMLHttpRequest object, wrapping its functionality,
+so we can be notified of who is calling its methods and the different events that occur.
+
 - XMLHttpRequestMock.restore(): Restore the native implementation.
 
 Brief history of the XMLHttpRequest object
