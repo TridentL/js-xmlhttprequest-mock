@@ -27,7 +27,7 @@ xhr.onreadystatechange = function() {
 	...
 };
 
-xhr.open('GET', 'http://www.tomasperez.com', true);
+xhr.open('GET', 'http://api.tomasperez.com/v1/data.json', true);
 xhr.send(null);
 
 /**
@@ -38,7 +38,7 @@ XMLHttpRequestMock.expect([
 	{
 		'url': 'http://api.tomasperez.com/v1/data.json',
 		'delay': 500,
-		'response: {a: 1, b: 2}
+		'response': {a: 1, b: 2}
 	}
 ]);
 
