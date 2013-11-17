@@ -17,9 +17,18 @@ XMLHttpRequestMock = (function(namespace, nativeObject) {
   var _nativeXMLHttpRequest = null;
 
   /**
+   * @param {Object} params
+   *  {delay} Number Request delay in ms
+   *  {Object} response
+   *  {Function| onreadystatechange
    * @object XMLHttpRequest
    */
-  namespace.XMLHttpRequest = function() {
+  namespace.XMLHttpRequest = function(params) {
+    this.params = {
+      delay: params.delay || 100,
+      onreadystatechange: params.onreadystatechange || null,
+      response: params.response || null,
+    };
   };
 
   /**
@@ -41,6 +50,12 @@ XMLHttpRequestMock = (function(namespace, nativeObject) {
    * @public
    */
   namespace.XMLHttpRequest.prototype.send = function() {
+    var self = this;
+    window.setTimeout(function() {
+      if (typeof self.params.onreadystatechange === 'function') {
+        self.params.onreadystatechange(self.params.response);
+      }
+    }, this.params.delay);
   };
 
   /**
@@ -57,11 +72,11 @@ XMLHttpRequestMock = (function(namespace, nativeObject) {
      * @method get 
      * @public
      */
-    get: function() {
+    get: function(params) {
       // Returns a non-native version of the XMLHttpRequest
       // TODO: Check if we have overriden the native object already
       // What to do in that case?
-      return new namespace.XMLHttpRequest();
+      return new namespace.XMLHttpRequest(params);
     },
 
     /**
